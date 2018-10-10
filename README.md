@@ -1,4 +1,4 @@
-# springboot-jwt-demo
+# springboot-jwt-rest
 
 ## 简介
 这是一个使用了springboot+springSecurity+jwt实现的基于token的权限管理的一个demo
