@@ -11,10 +11,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+
 @Entity
 public class Role implements Serializable {
 
+    private static final long serialVersionUID = 136767345345L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +46,40 @@ public class Role implements Serializable {
     @BatchSize(size = 100)
     private Set<Menu> menus = new HashSet<>();
 
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
 }

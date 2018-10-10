@@ -85,9 +85,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+//    @Bean
+//    public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
+//        MyFilterInvocationSecurityMetadataSource securityMetadataSource = new MyFilterInvocationSecurityMetadataSource();
+//        return securityMetadataSource;
+//    }
     @Bean
     public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
-        MyFilterInvocationSecurityMetadataSource securityMetadataSource = new MyFilterInvocationSecurityMetadataSource();
+        AppFilterInvocationSecurityMetadataSource securityMetadataSource = new AppFilterInvocationSecurityMetadataSource();
         return securityMetadataSource;
     }
 
