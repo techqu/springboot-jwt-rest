@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 @RestController
 @RequestMapping("/auth")

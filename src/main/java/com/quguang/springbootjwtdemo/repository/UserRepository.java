@@ -8,7 +8,4 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @EntityGraph(attributePaths = "roles")
     User findByUsername(String username);
 
-
-//    @EntityGraph(attributePaths = "users")
-    User findOneWithUsersById(long id);
 }

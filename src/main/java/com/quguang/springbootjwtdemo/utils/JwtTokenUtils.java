@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 public class JwtTokenUtils {
 
@@ -16,7 +16,7 @@ public class JwtTokenUtils {
     public static final String TOKEN_PREFIX = "Bearer ";
 
     private static final String SECRET = "jwtsecretdemo";
-    private static final String ISS = "echisan";
+    private static final String ISS = "quguang";
 
     // 角色的key
     private static final String ROLE_CLAIMS = "rol";

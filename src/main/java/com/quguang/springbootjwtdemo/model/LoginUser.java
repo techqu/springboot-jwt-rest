@@ -1,7 +1,7 @@
 package com.quguang.springbootjwtdemo.model;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 public class LoginUser {
 

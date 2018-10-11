@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 public class JwtUser implements UserDetails {
 

@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 @RestController
 @RequestMapping("/")

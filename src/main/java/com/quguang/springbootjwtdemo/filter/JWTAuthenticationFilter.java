@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by echisan on 2018/6/23
+ * Created by quguang on 2018/6/23
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

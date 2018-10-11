@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by echisan on 2018/6/24
+ * Created by quguang on 2018/6/24
  */
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
