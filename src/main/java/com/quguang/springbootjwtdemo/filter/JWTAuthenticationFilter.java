@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by echisan on 2018/6/23
@@ -63,10 +65,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String role = "";
         Collection<? extends GrantedAuthority> authorities = jwtUser.getAuthorities();
+        List<String> roles = new ArrayList<>();
         for (GrantedAuthority authority : authorities){
-            role = authority.getAuthority();
+            roles.add(authority.getAuthority());
         }
-
+        role = StringUtils.collectionToCommaDelimitedString(roles);
         String token = JwtTokenUtils.createToken(jwtUser.getUsername(), role, isRemember);
 //        String token = JwtTokenUtils.createToken(jwtUser.getUsername(), false);
         // 返回创建成功的token

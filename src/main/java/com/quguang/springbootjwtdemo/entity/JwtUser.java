@@ -1,11 +1,12 @@
 package com.quguang.springbootjwtdemo.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Created by echisan on 2018/6/23
@@ -25,7 +26,11 @@ public class JwtUser implements UserDetails {
         id = user.getId();
         username = user.getUsername();
         password = user.getPassword();
-        authorities = Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+        List<String> list = new ArrayList<>();
+        user.getRoles().stream().forEach(r -> list.add(r.getName()));
+        String authoritiesStr = StringUtils.collectionToCommaDelimitedString(list);
+        System.out.println(authoritiesStr);
+        authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStr);
     }
 
     @Override

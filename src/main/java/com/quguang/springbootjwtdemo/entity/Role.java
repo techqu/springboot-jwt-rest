@@ -47,6 +47,13 @@ public class Role implements Serializable {
     private Set<Menu> menus = new HashSet<>();
 
 
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
+
+
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

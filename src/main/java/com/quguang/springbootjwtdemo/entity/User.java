@@ -1,17 +1,22 @@
 package com.quguang.springbootjwtdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by echisan on 2018/6/23
  */
 @Data
 @Entity
-@Table(name = "jd_user")
-public class User {
+@Table(name = "user")
+public class User  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,22 +29,20 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-//    private List<Role> roles;
-    private String role;
+
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @BatchSize(size = 100)
+    private Set<Role> roles = new HashSet<>();
 
 
 
 
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                '}';
-    }
 }

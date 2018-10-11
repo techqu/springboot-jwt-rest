@@ -23,7 +23,7 @@ public class MyAccessDecisionManager implements org.springframework.security.acc
         Iterator<ConfigAttribute> ite = configAttributes.iterator();
         while (ite.hasNext()) {
             ConfigAttribute ca = ite.next();
-            String needRole = ((org.springframework.security.access.SecurityConfig) ca).getAttribute();
+            String needRole = ca.getAttribute();
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if(ga.getAuthority().equals(needRole)){
                     //匹配到有对应角色,则允许通过

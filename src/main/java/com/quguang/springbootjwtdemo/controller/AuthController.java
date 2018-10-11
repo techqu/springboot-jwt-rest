@@ -24,13 +24,13 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostMapping("/register")
-    public String registerUser(@RequestBody Map<String,String> registerUser){
-        User user = new User();
-        user.setUsername(registerUser.get("username"));
-        user.setPassword(bCryptPasswordEncoder.encode(registerUser.get("password")));
-        user.setRole("ROLE_USER");
-        User save = userRepository.save(user);
-        return save.toString();
-    }
+//    @PostMapping("/register")
+//    public String registerUser(@RequestBody Map<String,String> registerUser){
+//        User user = new User();
+//        user.setUsername(registerUser.get("username"));
+//        user.setPassword(bCryptPasswordEncoder.encode(registerUser.get("password")));
+//        user.setRole("ROLE_USER");
+//        User save = userRepository.save(user);
+//        return save.toString();
+//    }
 }

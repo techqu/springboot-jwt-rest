@@ -53,7 +53,8 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
         }
 
         //没有匹配上的资源，都是登录访问
-        return SecurityConfig.createList("ROLE_LOGIN");
+//        return SecurityConfig.createList("ROLE_LOGIN");
+        return null;
     }
 
     @Override
