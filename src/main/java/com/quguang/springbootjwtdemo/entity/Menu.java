@@ -32,13 +32,7 @@ public class Menu implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @ManyToMany
-    @JsonIgnore
-    @JoinTable(name = "backend_api_menus",
-            joinColumns = @JoinColumn(name="menus_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name="backend_apis_id", referencedColumnName="id"))
-//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<BackendApi> backendApis = new HashSet<>();
+
 
     @ManyToMany(mappedBy = "menus")
     @JsonIgnore
@@ -80,13 +74,7 @@ public class Menu implements Serializable {
         this.link = link;
     }
 
-    public Set<BackendApi> getBackendApis() {
-        return backendApis;
-    }
 
-    public void setBackendApis(Set<BackendApi> backendApis) {
-        this.backendApis = backendApis;
-    }
 
     public Set<Role> getRoles() {
         return roles;

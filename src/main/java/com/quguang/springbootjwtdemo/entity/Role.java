@@ -47,8 +47,16 @@ public class Role implements Serializable {
     private Set<Menu> menus = new HashSet<>();
 
 
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(name = "role_backend_api",
+            joinColumns = @JoinColumn(name="role_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name="backend_apis_id", referencedColumnName="id"))
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<BackendApi> backendApis = new HashSet<>();
 
-    @ManyToMany(mappedBy = "roles")
+
+    @ManyToMany(mappedBy = "roles",cascade=CascadeType.ALL)
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
@@ -88,5 +96,21 @@ public class Role implements Serializable {
 
     public void setMenus(Set<Menu> menus) {
         this.menus = menus;
+    }
+
+    public Set<BackendApi> getBackendApis() {
+        return backendApis;
+    }
+
+    public void setBackendApis(Set<BackendApi> backendApis) {
+        this.backendApis = backendApis;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

@@ -1,6 +1,8 @@
 package com.quguang.springbootjwtdemo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -31,8 +33,9 @@ public class BackendApi implements Serializable {
     private String operationId;
 
     @ManyToMany(mappedBy = "backendApis")
+    @JsonIgnore
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Menu> menus = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
 
     public static long getSerialVersionUID() {
@@ -87,11 +90,11 @@ public class BackendApi implements Serializable {
         this.operationId = operationId;
     }
 
-    public Set<Menu> getMenus() {
-        return menus;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface BackendApiRepository extends JpaRepository<BackendApi, Integer> {
 
-    @EntityGraph(attributePaths = "menus")
+    @EntityGraph(attributePaths = "roles")
     BackendApi findByPathAndMethod(String path, String method);
 
-    @EntityGraph(attributePaths = "menus")
+    @EntityGraph(attributePaths = "roles")
     List<BackendApi> findByPathStartsWithAndMethod(String path, String method);
 
 

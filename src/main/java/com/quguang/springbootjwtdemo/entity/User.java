@@ -32,7 +32,7 @@ public class User  implements Serializable {
 
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

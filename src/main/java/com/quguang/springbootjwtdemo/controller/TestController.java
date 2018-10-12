@@ -26,6 +26,11 @@ public class TestController {
     }
 
 
+    @GetMapping("/ignore")
+    public String ignore(){
+        return "ignore";
+    }
+
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
