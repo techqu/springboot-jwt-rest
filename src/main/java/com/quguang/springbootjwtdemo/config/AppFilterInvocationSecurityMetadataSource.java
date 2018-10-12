@@ -20,20 +20,11 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
 
     @Autowired
     private BackendApiRepository backendApiRepository;
-    @Autowired
-    private MenuRepository menuRepository;
-    @Autowired
-    private FilterInvocationSecurityMetadataSource  superMetadataSource;
+
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-//    private MenuRepository menuRepository;
-//    private BackendApiRepository backendApiRepository;
 
-//    public void init(MenuRepository menuRepository, BackendApiRepository backendApiRepository) {
-//        this.menuRepository = menuRepository;
-//        this.backendApiRepository = backendApiRepository;
-//    }
     @Override
     public boolean supports(Class<?> clazz) {
         return FilterInvocation.class.isAssignableFrom(clazz);

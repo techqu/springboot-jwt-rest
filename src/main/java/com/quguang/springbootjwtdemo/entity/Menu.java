@@ -1,12 +1,14 @@
 package com.quguang.springbootjwtdemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quguang.springbootjwtdemo.model.TreeNode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +21,7 @@ public class Menu implements Serializable {
     private Long id;
 
     @Column(name = "parent_id")
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 文本
@@ -38,6 +40,11 @@ public class Menu implements Serializable {
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
+
+    @Transient
+    private List<Menu> children;
+
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -50,12 +57,20 @@ public class Menu implements Serializable {
         this.id = id;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 
     public String getText() {

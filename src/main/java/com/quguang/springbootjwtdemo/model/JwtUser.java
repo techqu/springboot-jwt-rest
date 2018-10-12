@@ -1,5 +1,6 @@
-package com.quguang.springbootjwtdemo.entity;
+package com.quguang.springbootjwtdemo.model;
 
+import com.quguang.springbootjwtdemo.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

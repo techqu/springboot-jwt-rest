@@ -1,6 +1,6 @@
 package com.quguang.springbootjwtdemo.service;
 
-import com.quguang.springbootjwtdemo.entity.JwtUser;
+import com.quguang.springbootjwtdemo.model.JwtUser;
 import com.quguang.springbootjwtdemo.entity.User;
 import com.quguang.springbootjwtdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

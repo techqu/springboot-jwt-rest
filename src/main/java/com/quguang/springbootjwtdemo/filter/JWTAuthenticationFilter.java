@@ -1,6 +1,6 @@
 package com.quguang.springbootjwtdemo.filter;
 
-import com.quguang.springbootjwtdemo.entity.JwtUser;
+import com.quguang.springbootjwtdemo.model.JwtUser;
 import com.quguang.springbootjwtdemo.model.LoginUser;
 import com.quguang.springbootjwtdemo.utils.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
