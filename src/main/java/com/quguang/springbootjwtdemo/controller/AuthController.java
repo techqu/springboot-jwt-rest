@@ -28,10 +28,9 @@ public class AuthController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody Map<String,String> registerUser){
-        User user = new User();
-        user.setUsername(registerUser.get("username"));
-        user.setPassword(bCryptPasswordEncoder.encode(registerUser.get("password")));
+    public User registerUser(@RequestBody User user){
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
         Role role = new Role();
         role.setName("ROLE_NORMAL");
@@ -39,6 +38,6 @@ public class AuthController {
         roles.add(role);
         user.setRoles(roles);
         User save = userRepository.save(user);
-        return save.toString();
+        return save;
     }
 }

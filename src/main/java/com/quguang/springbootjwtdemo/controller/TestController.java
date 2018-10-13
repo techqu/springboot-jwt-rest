@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by quguang on 2018/6/23
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/test")
 public class TestController {
 
     @GetMapping("/restart")
@@ -38,13 +38,5 @@ public class TestController {
         return "创建了一个新的任务";
     }
 
-    @PutMapping("/{taskId}")
-    public String updateTasks(@PathVariable("taskId")Integer id){
-        return "更新了一下id为:"+id+"的任务";
-    }
 
-    @DeleteMapping("/{taskId}")
-    public String deleteTasks(@PathVariable("taskId")Integer id){
-        return "删除了id为:"+id+"的任务";
-    }
 }

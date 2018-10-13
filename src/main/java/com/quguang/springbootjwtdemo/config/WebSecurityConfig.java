@@ -5,6 +5,7 @@ import com.quguang.springbootjwtdemo.filter.JWTAuthenticationFilter;
 import com.quguang.springbootjwtdemo.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -34,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
 
+    @Value("${auth.enabled}")
+    private boolean authEnabled = true;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -45,8 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/ignore");
-        web.ignoring().antMatchers("/**");
+        if(authEnabled){
+            web.ignoring().antMatchers("/ignore");
+        }else{
+            web.ignoring().antMatchers("/**");
+        }
     }
 
     @Override

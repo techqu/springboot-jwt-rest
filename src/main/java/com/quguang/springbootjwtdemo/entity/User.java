@@ -1,6 +1,8 @@
 package com.quguang.springbootjwtdemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 
@@ -16,13 +18,15 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "user")
+@ApiModel(description= "返回用户信息")
 public class User  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @ApiModelProperty(value = "用户id")
     private Integer id;
-
+    @ApiModelProperty(value = "用户名")
     @Column(name = "username")
     private String username;
 

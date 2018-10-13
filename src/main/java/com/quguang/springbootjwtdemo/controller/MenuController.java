@@ -1,10 +1,16 @@
 package com.quguang.springbootjwtdemo.controller;
 
 import com.quguang.springbootjwtdemo.entity.Menu;
+import com.quguang.springbootjwtdemo.entity.User;
 import com.quguang.springbootjwtdemo.repository.MenuRepository;
+import com.quguang.springbootjwtdemo.repository.UserRepository;
+import com.quguang.springbootjwtdemo.utils.JwtTokenUtils;
 import com.quguang.springbootjwtdemo.utils.MenuTreeBuilder;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,17 +31,21 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/menus")
+@Api(tags = "菜单管理")
 public class MenuController {
 
     @Autowired
     MenuRepository menuRepository;
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * 获取menu列表
      * @return
      */
     @GetMapping
-    public  List getMenu(){
+    public  List getMenu( @RequestHeader HttpHeaders headers){
+        JwtTokenUtils.getUserRole(headers.getFirst("Au"));
      List<Menu> menus =  menuRepository.findAll();
 //     List<Menu> menuTree = MenuTreeBuilder.bulid(menus);
      List<Menu> menuTree = MenuTreeBuilder.buildByRecursive(menus);
