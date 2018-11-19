@@ -3,7 +3,6 @@ package com.quguang.springbootjwtdemo.config;
 import com.quguang.springbootjwtdemo.entity.BackendApi;
 import com.quguang.springbootjwtdemo.entity.Role;
 import com.quguang.springbootjwtdemo.repository.BackendApiRepository;
-import com.quguang.springbootjwtdemo.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -15,6 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问
+ */
 public class AppFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 
@@ -31,7 +34,13 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
     }
 
 
-
+    /**
+     * 重写getAttributes方法，
+     * 通过api和method动态获取需要的roles列表，添加到attributes中
+     * @param object
+     * @return
+     * @throws IllegalArgumentException
+     */
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
@@ -40,7 +49,11 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
         List<Role> neededRoles = this.getRequestNeededRoles(fi.getRequest().getMethod(), fi.getRequestUrl());
 
         if (neededRoles != null) {
-            return SecurityConfig.createList(neededRoles.stream().map(role -> role.getName()).collect(Collectors.toList()).toArray(new String[]{}));
+            return SecurityConfig.createList(
+                    neededRoles.stream()
+                               .map(role -> role.getName())
+                               .collect(Collectors.toList())
+                               .toArray(new String[]{}));
         }
 
         //没有匹配上的资源，都是登录访问
@@ -53,6 +66,15 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
         return null;
     }
 
+    /**
+     * 核心是getRequestNeededRoles怎么实现，
+     * 获取到干净的RequestUrl（去掉参数）,
+     * 然后看是否有对应的backendAPI，
+     * 如果没有，则有可能该API有path参数，我们可以去掉最后的path，去库里模糊匹配，直到找到。
+     * @param method
+     * @param path
+     * @return
+     */
     public List<Role> getRequestNeededRoles(String method, String path) {
         String rawPath = path;
         //  remove parameters

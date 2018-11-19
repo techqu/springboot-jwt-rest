@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //在这个类中，你就可以从数据库中读入用户的密码，角色信息，是否锁定，账号是否过期等
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
     @Override
@@ -60,8 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable()
 
-                .authorizeRequests()
-                .anyRequest().authenticated()
+                .authorizeRequests()//拦截请求，创建FilterSecurityInterceptor
+                .anyRequest().authenticated()//在创建过滤器的基础上的一些自定义配置
                 // 自定义FilterInvocationSecurityMetadataSource
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
@@ -69,10 +70,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             O fsi) {
                         fsi.setSecurityMetadataSource(mySecurityMetadataSource());
                         fsi.setAccessDecisionManager(myAccessDecisionManager());
+
                         return fsi;
                     }
                 })
-                .and()
+                .and()//用and来表示配置过滤器结束，以便进行下一个过滤器的创建和配置
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // 不需要session

@@ -40,6 +40,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 从输入流中获取到登录的信息
         try {
+            System.out.println("attemptAuthentication");
             LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
             rememberMe.set(loginUser.getRememberMe());
             return authenticationManager.authenticate(
@@ -51,8 +52,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    // 成功验证后调用的方法
-    // 如果验证成功，就生成token并返回
+    /**
+     *   成功验证后调用的方法
+     *  如果验证成功，就生成token并返回
+     * @param request
+     * @param response
+     * @param chain
+     * @param authResult
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
@@ -78,8 +87,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("token", JwtTokenUtils.TOKEN_PREFIX + token);
     }
 
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.getWriter().write("authentication failed, reason: " + failed.getMessage());
-    }
+//    @Override
+//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+////        response.getWriter().write("authentication failed, reason: " + failed.getMessage());
+//    }
 }

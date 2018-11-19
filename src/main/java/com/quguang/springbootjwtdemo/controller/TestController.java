@@ -1,7 +1,12 @@
 package com.quguang.springbootjwtdemo.controller;
 
+import com.quguang.springbootjwtdemo.model.RedisProperties;
+import com.quguang.springbootjwtdemo.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * Created by quguang on 2018/6/23
@@ -10,8 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestController {
 
+  @Resource
+  private TestService testService;
+
     @GetMapping("/restart")
     public String restart(){
+
+      testService.test();
+
         return "restart";
     }
 

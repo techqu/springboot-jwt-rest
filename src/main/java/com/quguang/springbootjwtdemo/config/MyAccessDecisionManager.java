@@ -10,13 +10,19 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collection;
 import java.util.Iterator;
 
+
+/**
+ * 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源
+ * 重
+ */
 public class MyAccessDecisionManager implements org.springframework.security.access.AccessDecisionManager {
 
     @Override
     public void decide(Authentication authentication, Object object,
                        Collection<ConfigAttribute> configAttributes)
             throws AccessDeniedException, InsufficientAuthenticationException {
-        //这段代码其实不需要,因为spring-security-core-4.1.4.RELEASE-sources.jar!/org/springframework/security/access/intercept/AbstractSecurityInterceptor.java第215行判断提前返回了,不会进入decide方法
+        //这段代码其实不需要,因为spring-security-core-4.1.4.RELEASE-sources.jar!/org/springframework/security/access/intercept/AbstractSecurityInterceptor.java
+        // 第215行判断提前返回了,不会进入decide方法
         if (CollectionUtils.isEmpty(configAttributes)) {
             throw new AccessDeniedException("not allow");
         }
