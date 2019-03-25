@@ -6,6 +6,7 @@ import com.quguang.springbootjwtdemo.model.req.RoleMenuReq;
 import com.quguang.springbootjwtdemo.repository.RoleRepository;
 import com.quguang.springbootjwtdemo.repository.UserRepository;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +30,14 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/roles")
-@Api(tags = "角色管理")
+@Api(tags = "role manager")
 public class RoleController {
 
     @Autowired
     RoleRepository roleRepository;
 
 
-
+    @ApiOperation(value = "save role")
     @PostMapping(value = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Role addRole(@RequestBody Role role){
        Role roleS  =  roleRepository.save(role);

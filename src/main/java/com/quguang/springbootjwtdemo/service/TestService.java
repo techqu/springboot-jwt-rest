@@ -17,8 +17,9 @@ public class TestService extends BaseServcie {
 
 
     }
-    public void test(){
+    public String test(String token){
         System.out.println(this.port);
+        return "ok"+token;
     }
 
 }

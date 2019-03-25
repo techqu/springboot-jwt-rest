@@ -41,9 +41,7 @@ public class Swagger  {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.quguang.springbootjwtdemo.controller"))
                 .paths(PathSelectors.any())
-                .build()
-                .globalOperationParameters(list)
-                .groupName("权限管理接口");
+                .build();
     }
 
 
@@ -51,7 +49,6 @@ public class Swagger  {
         return new ApiInfoBuilder()
                 .title(title)
                 .description(desc)
-                .termsOfServiceUrl("http://localhost:8080")
                 .version(version)
                 .build();
     }

@@ -21,7 +21,7 @@ public class TestController {
     @GetMapping("/restart")
     public String restart(){
 
-      testService.test();
+      testService.test("heihei");
 
         return "restart";
     }
