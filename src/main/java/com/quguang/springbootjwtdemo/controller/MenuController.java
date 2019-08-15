@@ -1,7 +1,6 @@
 package com.quguang.springbootjwtdemo.controller;
 
-import com.quguang.springbootjwtdemo.entity.Menu;
-import com.quguang.springbootjwtdemo.entity.User;
+import com.quguang.springbootjwtdemo.entity.PermissionMenu;
 import com.quguang.springbootjwtdemo.repository.MenuRepository;
 import com.quguang.springbootjwtdemo.repository.UserRepository;
 import com.quguang.springbootjwtdemo.utils.JwtTokenUtils;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by quguang on 2018/6/23
@@ -46,10 +44,10 @@ public class MenuController {
     @GetMapping
     public  List getMenu( @RequestHeader HttpHeaders headers){
         JwtTokenUtils.getUserRole(headers.getFirst("Au"));
-     List<Menu> menus =  menuRepository.findAll();
-//     List<Menu> menuTree = MenuTreeBuilder.bulid(menus);
-     List<Menu> menuTree = MenuTreeBuilder.buildByRecursive(menus);
-     return menuTree;
+     List<PermissionMenu> perMenus =  menuRepository.findAll();
+//     List<PermissionMenu> perMenuTree = MenuTreeBuilder.bulid(perMenus);
+     List<PermissionMenu> perMenuTree = MenuTreeBuilder.buildByRecursive(perMenus);
+     return perMenuTree;
     }
 
 }

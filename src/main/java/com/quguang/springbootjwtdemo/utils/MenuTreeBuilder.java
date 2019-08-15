@@ -1,7 +1,7 @@
 package com.quguang.springbootjwtdemo.utils;
 
 
-import com.quguang.springbootjwtdemo.entity.Menu;
+import com.quguang.springbootjwtdemo.entity.PermissionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,25 +14,25 @@ public class MenuTreeBuilder {
 
     /**
      * 两层循环实现建树
-     * @param Menus 传入的树节点列表
+     * @param perMenus 传入的树节点列表
      * @return
      */
-    public static List<Menu> bulid(List<Menu> Menus) {
+    public static List<PermissionMenu> bulid(List<PermissionMenu> perMenus) {
 
-        List<Menu> trees = new ArrayList<Menu>();
+        List<PermissionMenu> trees = new ArrayList<PermissionMenu>();
 
-        for (Menu Menu : Menus) {
+        for (PermissionMenu PerMenu : perMenus) {
 
-            if (Menu.getParentId()==null) {
-                trees.add(Menu);
+            if (PerMenu.getParentId()==null) {
+                trees.add(PerMenu);
             }
 
-            for (Menu it : Menus) {
-                if (it.getParentId() == Menu.getId()) {
-                    if (Menu.getChildren() == null) {
-                        Menu.setChildren(new ArrayList<Menu>());
+            for (PermissionMenu it : perMenus) {
+                if (PerMenu.getId().equals( it.getParentId() )) {
+                    if (PerMenu.getChildren() == null) {
+                        PerMenu.setChildren(new ArrayList<PermissionMenu>());
                     }
-                    Menu.getChildren().add(it);
+                    PerMenu.getChildren().add(it);
                 }
             }
         }
@@ -41,14 +41,14 @@ public class MenuTreeBuilder {
 
     /**
      * 使用递归方法建树
-     * @param Menus
+     * @param perMenus
      * @return
      */
-    public static List<Menu> buildByRecursive(List<Menu> Menus) {
-        List<Menu> trees = new ArrayList<Menu>();
-        for (Menu Menu : Menus) {
-            if (Menu.getParentId()==null) {
-                trees.add(findChildren(Menu,Menus));
+    public static List<PermissionMenu> buildByRecursive(List<PermissionMenu> perMenus) {
+        List<PermissionMenu> trees = new ArrayList<PermissionMenu>();
+        for (PermissionMenu PerMenu : perMenus) {
+            if (PerMenu.getParentId()==null) {
+                trees.add(findChildren(PerMenu, perMenus));
             }
         }
         return trees;
@@ -56,19 +56,19 @@ public class MenuTreeBuilder {
 
     /**
      * 递归查找子节点
-     * @param Menus
+     * @param perMenus
      * @return
      */
-    public static Menu findChildren(Menu Menu,List<Menu> Menus) {
-        for (Menu it : Menus) {
-            if(Menu.getId().equals(it.getParentId())) {
-                if (Menu.getChildren() == null) {
-                    Menu.setChildren(new ArrayList<Menu>());
+    public static PermissionMenu findChildren(PermissionMenu PerMenu, List<PermissionMenu> perMenus) {
+        for (PermissionMenu it : perMenus) {
+            if(PerMenu.getId().equals(it.getParentId())) {
+                if (PerMenu.getChildren() == null) {
+                    PerMenu.setChildren(new ArrayList<PermissionMenu>());
                 }
-                Menu.getChildren().add(findChildren(it,Menus));
+                PerMenu.getChildren().add(findChildren(it, perMenus));
             }
         }
-        return Menu;
+        return PerMenu;
     }
 
 

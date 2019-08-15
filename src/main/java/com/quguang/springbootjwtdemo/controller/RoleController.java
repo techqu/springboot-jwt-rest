@@ -1,20 +1,14 @@
 package com.quguang.springbootjwtdemo.controller;
 
 import com.quguang.springbootjwtdemo.entity.Role;
-import com.quguang.springbootjwtdemo.model.req.RoleBackendApiReq;
-import com.quguang.springbootjwtdemo.model.req.RoleMenuReq;
+import com.quguang.springbootjwtdemo.dto.req.RoleBackendApiReq;
+import com.quguang.springbootjwtdemo.dto.req.RoleMenuReq;
 import com.quguang.springbootjwtdemo.repository.RoleRepository;
-import com.quguang.springbootjwtdemo.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * Created by quguang on 2018/6/23

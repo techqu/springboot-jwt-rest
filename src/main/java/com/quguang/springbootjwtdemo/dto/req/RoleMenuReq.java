@@ -1,4 +1,4 @@
-package com.quguang.springbootjwtdemo.model.req;
+package com.quguang.springbootjwtdemo.dto.req;
 
 import lombok.Data;
 

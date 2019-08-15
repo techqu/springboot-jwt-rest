@@ -1,13 +1,13 @@
 package com.quguang.springbootjwtdemo.repository;
 
-import com.quguang.springbootjwtdemo.entity.Menu;
+import com.quguang.springbootjwtdemo.entity.PermissionMenu;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface MenuRepository extends JpaRepository<Menu, Integer> {
+public interface MenuRepository extends JpaRepository<PermissionMenu, Integer> {
 
     @EntityGraph(attributePaths = "roles")
-    Menu findOneWithRolesById(long id);
+    PermissionMenu findOneWithRolesById(long id);
 
 }

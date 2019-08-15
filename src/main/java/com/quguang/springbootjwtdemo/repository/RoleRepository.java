@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.CrudRepository;
 
 public interface RoleRepository extends CrudRepository<Role, Integer> {
-    @EntityGraph(attributePaths = "menus")
+    @EntityGraph(attributePaths = "permissions")
     Role findById(String username);
 
 

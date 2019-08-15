@@ -1,8 +1,11 @@
 package com.quguang.springbootjwtdemo.config;
 
-import com.quguang.springbootjwtdemo.entity.BackendApi;
+import com.quguang.springbootjwtdemo.constant.SystemConstant;
+import com.quguang.springbootjwtdemo.entity.Permission;
+import com.quguang.springbootjwtdemo.entity.PermissionApi;
 import com.quguang.springbootjwtdemo.entity.Role;
-import com.quguang.springbootjwtdemo.repository.BackendApiRepository;
+import com.quguang.springbootjwtdemo.repository.PermissionApiRepository;
+import com.quguang.springbootjwtdemo.repository.PermissionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -10,6 +13,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +26,9 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
 
 
     @Autowired
-    private BackendApiRepository backendApiRepository;
+    private PermissionApiRepository permissionApiRepository;
+    @Autowired
+    private PermissionDao permissionDao;
 
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -57,8 +63,8 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
         }
 
         //没有匹配上的资源，都是登录访问
-        return SecurityConfig.createList("ROLE_LOGIN");
-//        return null;
+//        return SecurityConfig.createList("ROLE_LOGIN");
+        return null;
     }
 
     @Override
@@ -69,7 +75,7 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
     /**
      * 核心是getRequestNeededRoles怎么实现，
      * 获取到干净的RequestUrl（去掉参数）,
-     * 然后看是否有对应的backendAPI，
+     * 然后看是否有对应的PermissionAPI，
      * 如果没有，则有可能该API有path参数，我们可以去掉最后的path，去库里模糊匹配，直到找到。
      * @param method
      * @param path
@@ -77,44 +83,53 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
      */
     public List<Role> getRequestNeededRoles(String method, String path) {
         String rawPath = path;
+        List<Role> roles = new ArrayList<>();
+
         //  remove parameters
         if (path.indexOf("?") > -1) {
             path = path.substring(0, path.indexOf("?"));
         }
-        // /menus/{id}
-        BackendApi api = backendApiRepository.findByPathAndMethod(path, method);
+//         /menus/{id}
+        PermissionApi api = permissionApiRepository.findByPathAndMethod(path, method);
         if (api == null) {
             // try fetch by remove last path
             api = loadFromSimilarApi(method, path, rawPath);
         }
+        if(api!=null){
+            List<Permission> permissionList = permissionDao.findByTypeAndPid(SystemConstant.PERMISSION_API_TYPE_ID,api.getId()+"");
+            for (Permission permission : permissionList) {
+                roles.addAll(permission.getRoles());
+            }
+        }
 
-        if (api != null && api.getRoles().size() > 0) {
-            return api.getRoles()
+        if (api != null && roles.size() > 0) {
+            return roles
                     .stream()
+                    .distinct()
                     .collect(Collectors.toList());
         }
         return null;
     }
 
-    private BackendApi loadFromSimilarApi(String method, String path, String rawPath) {
+    private PermissionApi loadFromSimilarApi(String method, String path, String rawPath) {
         if (path.lastIndexOf("/") > -1) {
             path = path.substring(0, path.lastIndexOf("/"));
-            List<BackendApi> apis = backendApiRepository.findByPathStartsWithAndMethod(path, method);
+            List<PermissionApi> apis = permissionApiRepository.findByPathStartsWithAndMethod(path, method);
 
             // 如果为空，再去掉一层path
             while (apis == null) {
                 if (path.lastIndexOf("/") > -1) {
                     path = path.substring(0, path.lastIndexOf("/"));
-                    apis = backendApiRepository.findByPathStartsWithAndMethod(path, method);
+                    apis = permissionApiRepository.findByPathStartsWithAndMethod(path, method);
                 } else {
                     break;
                 }
             }
 
             if (apis != null) {
-                for (BackendApi backendApi : apis) {
-                    if (antPathMatcher.match(backendApi.getPath(), rawPath)) {
-                        return backendApi;
+                for (PermissionApi perapi : apis) {
+                    if (antPathMatcher.match(perapi.getPath(), rawPath)) {
+                        return perapi;
                     }
                 }
             }

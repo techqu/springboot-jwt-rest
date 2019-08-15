@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "remote.service")
 // PropertySource默认取application.properties
- @PropertySource(value = "redis.properties")
+ @PropertySource(value = "classpath:redis.properties")
 public class RedisProperties {
     private String host;
     private String port;

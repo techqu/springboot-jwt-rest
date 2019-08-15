@@ -2,24 +2,22 @@ package com.quguang.springbootjwtdemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.BatchSize;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
-public class Role implements Serializable {
+@Table(name = "pe_role")
+public class Role extends BaseEntity  {
 
-    private static final long serialVersionUID = 136767345345L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     /**
      * 名称
@@ -36,43 +34,21 @@ public class Role implements Serializable {
     @Column(name = "remark")
     private String remark;
 
+
+    @ManyToMany(targetEntity = Permission.class)
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "role_menus",
-            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "menu_id", referencedColumnName = "id")})
+    @org.hibernate.annotations.ForeignKey(name = "none")
+    @JoinTable(name = "pe_role_permission",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"))
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @BatchSize(size = 100)
-    private Set<Menu> menus = new HashSet<>();
+    private Set<Permission> permissions = new HashSet<>();
 
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)//不维护中间表
     @JsonIgnore
-    @JoinTable(name = "role_backend_api",
-            joinColumns = @JoinColumn(name="role_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name="backend_apis_id", referencedColumnName="id"))
-//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<BackendApi> backendApis = new HashSet<>();
-
-
-    @ManyToMany(mappedBy = "roles",cascade=CascadeType.ALL)
-    @JsonIgnore
-    private Set<User> users = new HashSet<>();
-
-
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @org.hibernate.annotations.ForeignKey(name = "none")
+    private Set<User> users = new HashSet<>();//角色与用户   多对多
 
     public String getName() {
         return name;
@@ -90,20 +66,12 @@ public class Role implements Serializable {
         this.remark = remark;
     }
 
-    public Set<Menu> getMenus() {
-        return menus;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
-    }
-
-    public Set<BackendApi> getBackendApis() {
-        return backendApis;
-    }
-
-    public void setBackendApis(Set<BackendApi> backendApis) {
-        this.backendApis = backendApis;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public Set<User> getUsers() {
@@ -113,4 +81,13 @@ public class Role implements Serializable {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }
+

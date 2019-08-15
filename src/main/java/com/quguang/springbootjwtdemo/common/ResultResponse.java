@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 public class ResultResponse {
-//    private BaseErrorType error;
+    private BaseErrorType error;
     private Boolean ok = true;
     private String errorCode;
     private String errorMsg;
@@ -22,15 +22,15 @@ public class ResultResponse {
     public ResultResponse() {
     }
 
-//    public String toJson() {
-//        if (null != this.error) {
-//            this.ok = false;
-//            this.errorCode = error.getCode();
-//            this.errorMsg = errorMsg == null ? error.getMessage() : errorMsg;
-//        }
-//        SimplePropertyPreFilter filter = new MyPropertyPreFilter(this.getClass(), "error");
-//        return JSON.toJSONString(this, filter, SerializerFeature.WriteMapNullValue, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.UseISO8601DateFormat);
-//    }
+    public String toJson() {
+        if (null != this.error) {
+            this.ok = false;
+            this.errorCode = error.getCode();
+            this.errorMsg = errorMsg == null ? error.getMessage() : errorMsg;
+        }
+        SimplePropertyPreFilter filter = new MyPropertyPreFilter(this.getClass(), "error");
+        return JSON.toJSONString(this, filter, SerializerFeature.WriteMapNullValue, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.UseISO8601DateFormat);
+    }
 
    /**
      * 创建 rest 返回对象

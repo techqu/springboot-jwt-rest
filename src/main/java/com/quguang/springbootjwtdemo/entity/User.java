@@ -17,15 +17,10 @@ import java.util.Set;
  */
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "bs_user")
 @ApiModel(description= "返回用户信息")
-public class User  implements Serializable {
+public class User  extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @ApiModelProperty(value = "用户id")
-    private Integer id;
     @ApiModelProperty(value = "用户名")
     @Column(name = "username")
     private String username;
@@ -37,13 +32,14 @@ public class User  implements Serializable {
 
     @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)
+    @org.hibernate.annotations.ForeignKey(name="none")
     @JoinTable(
-            name = "user_role",
+            name = "pe_user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 100)
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();//用户与角色   多对多
 
 
 

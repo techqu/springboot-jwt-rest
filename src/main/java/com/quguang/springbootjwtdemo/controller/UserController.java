@@ -1,13 +1,11 @@
 package com.quguang.springbootjwtdemo.controller;
 
 import com.quguang.springbootjwtdemo.entity.User;
-import com.quguang.springbootjwtdemo.model.req.RoleMenuReq;
-import com.quguang.springbootjwtdemo.model.req.UserRoleReq;
+import com.quguang.springbootjwtdemo.dto.req.UserRoleReq;
 import com.quguang.springbootjwtdemo.repository.UserRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
